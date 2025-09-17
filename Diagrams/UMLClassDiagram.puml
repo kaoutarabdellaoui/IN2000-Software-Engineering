@@ -1,0 +1,467 @@
+@startuml
+class data.log.repository.ActivityRepository {
++ void addLog(data.database.Activity)
++ void deleteLog(data.database.Activity)
++ List<Int> getAllLogs(String)
++ void adjustTimesWalked(String,Int,Int)
++ Int getTotalTimesWalked(String)
++ void addNotesToLog(String,Int,String)
++ String getNotesForHike(String,Int)
++ Int getTimesWalkedForHike(String,Int)
+}
+
+class ui.screens.hikeCardScreen.HikeScreenViewModel {
+-  _hikeScreenUIState
++ StateFlow<HikeScreenUIState> hikeScreenUIState
++ void updateHike(Feature)
++ void updateRecommendedHikes(List<Feature>)
++ void updateRecommendedHikesLoaded(Boolean)
++ void getHikeDescription(HomeScreenViewModel,OpenAIViewModel)
++ void updateDescriptionAlreadyLoaded(Boolean)
++ void updateSelectedDay(String)
++ void updateSelectedDate(String)
+}
+
+
+class ui.screens.hikeCardScreen.HikeScreenUIState {
+}
+class data.locationForecastAPI.models.Next12Hours {
+}
+class ui.screens.favoriteScreen.FavoritesScreenViewModel {
+-  _favoriteScreenUIState
++ StateFlow<FavoriteScreenUIState> favoriteScreenUIState
++ void loadFavorites()
++ void setUser()
++ void updateUserLocationFromMapbox()
++ void updateUserLocation(Point)
++ List<Int> getAllFavorites(String)
++ Boolean isHikeFavorite(Feature)
++ void getAllConverteFavorites()
++ void addFavorite(Int)
++ void deleteFavorite(Int)
+}
+
+
+class ui.screens.favoriteScreen.FavoriteScreenUIState {
+}
+class data.locationForecastAPI.models.Next1Hours {
+}
+class data.openAIAPI.datasource.OpenAIDatasource {
+-  client
+-  endpoint
+-  apiKey
+-  modelName
+-  apiVersion
++ ChatCompletionsResponse getCompletionsSamples(String)
++ Flow<String> getCompletionsStream(String)
+- String? processJsonLine(String)
+}
+
+
+class data.locationForecastAPI.models.Summary {
+}
+class data.locationForecastAPI.datasource.LocationForecastDatasource {
++ Locationforecast? getLocationForecast(Double,Double)
+}
+
+class data.locationForecastAPI.models.Details {
+}
+class data.database.ProfileDatabase$Companion$DatabaseCallBack {
++ void onCreate(SupportSQLiteDatabase)
+- void populateDatabase()
+}
+
+class data.database.ProfileDatabase$Companion {
+- ProfileDatabase? INSTANCE
++ ProfileDatabase getDatabase(Context)
+}
+
+
+abstract class data.database.ProfileDatabase {
++ FavoriteDao favoriteDao()
++ ProfileDao profileDao()
++ ActivityDao logDao()
+}
+
+class ui.mapbox.null {
++ void onIndicatorPositionChanged(Point)
+}
+
+class data.hikeAPI.models.DifficultyInfo {
+}
+class data.hikeAPI.datasource.HikeAPIDatasource {
+-  ktorHttpClient
++ List<Feature> getHikes(Double,Double,Int,String,Int)
++ List<Feature> getHikesById(List<String>,Point)
+}
+
+
+class data.openAIAPI.models.ChatMessage {
+}
+class data.hikeAPI.models.PropertiesX {
+}
+class data.database.null {
++ void migrate(SupportSQLiteDatabase)
+}
+
+class data.database.null {
++ void migrate(SupportSQLiteDatabase)
+}
+
+class data.hikeAPI.models.Hikes {
+}
+class data.openAIAPI.models.ChatCompletionsRequest {
+}
+class data.hikeAPI.models.Crs {
+}
+class ui.screens.chatbotScreen.OpenAIViewModel {
+-  openAIRepository
+-  hikeAPIRepository
+-  _openAIUIState
++ StateFlow<OpenAIUIState> openAIUIState
+-  _conversationHistory
++ List<ChatbotMessage> conversationHistory
++ void addUserMessage(String)
++ void addBotMessage(String)
++ void getCompletionsSamples(String,(String) -> Unit)
++ void getCompletionsStream(String)
++ void addFeature()
++ void getChatbotResponse(String,HomeScreenViewModel)
++ void getRecommendedHikes(HomeScreenViewModel,HikeScreenViewModel)
+}
+
+
+class ui.screens.chatbotScreen.OpenAIUIState {
+}
+class data.locationForecastAPI.models.Meta {
+}
+class data.database.Favorite {
+}
+class data.openAIAPI.models.ChatCompletionsResponse {
+}
+class data.date.Weekdays$Companion {
++ Int indexOf(String)
+}
+
+enum data.date.Weekdays {
++  Mandag
++  Tirsdag
++  Onsdag
++  Torsdag
++  Fredag
++  Lørdag
++  Søndag
+}
+
+class data.hikeAPI.models.Properties {
+}
+class data.favorites.repository.FavoriteRepository {
++ void addFavorite(Favorite)
++ void deleteFavorite(Favorite)
++ List<Int> getAllFavorites(String)
+}
+
+class data.locationForecastAPI.models.DetailsX {
+}
+class ui.mapbox.MapboxViewModel {
+-  placeAutocomplete
+- MutableStateFlow<MapboxUIState> _mapboxUIState
++ StateFlow<MapboxUIState> mapboxUIState
++ void updateMapStyle(String)
++ void updatePointerCoordinates(Point?)
++ void resetShouldFetchHikes()
++ void updateSearchQuery(String)
++ void getSelectedSearchResultPoint(PlaceAutocompleteSuggestion)
++ void setLoaderState(Boolean)
++ void updatePolylineAnnotationsFromFeatures(List<Feature>)
++ void clearPolylineAnnotations()
++ void centerOnUserPosition()
++ void updateLatestUserPosition(Point)
+}
+
+
+class ui.mapbox.MapboxUIState {
+}
+class data.metAlertsAPI.datasource.MetAlertsDatasource {
++ MetAlerts? getMetAlerts()
+}
+
+class ui.screens.homeScreen.HomeScreenViewModel {
+-  hikeAPIRepository
+-  locationForecastRepository
+-  metAlertsRepository
+-  _homeScreenUIState
++ StateFlow<HomeScreenUIState> homeScreenUIState
+-  _sheetStateTarget
++  sheetStateTarget
+-  _currentSheetOffset
++  currentSheetOffset
++ void markAanundDialogShown()
++ void setSheetState(SheetDrawerDetent)
++ void updateNetworkStatus(Boolean)
++ void updateSheetOffset(Float)
++ void fetchHikes(Double,Double,Int,String,Int)
++ void fetchForecast(Point)
++ void fetchAlerts()
++ void clearHikes()
++ List<TimeSeries>? timeSeriesFromDate(String)
++ Double daysHighestTemp(String)
++ Double daysLowestTemp(String)
++ Double daysAverageWindSpeed(String)
+}
+
+
+class ui.screens.homeScreen.HomeScreenUIState {
+}
+class data.locationForecastAPI.models.Properties {
+}
+class data.hikeAPI.models.Geometry {
+}
+class data.openAIAPI.models.Usage {
+}
+class ui.navigation.Screen$Welcome {
+}
+class ui.navigation.Screen$Home {
+}
+class ui.navigation.Screen$Favorites {
+}
+class ui.navigation.Screen$HikeScreen {
+}
+class ui.navigation.Screen$Chatbot {
+}
+class ui.navigation.Screen$Profile {
+}
+class ui.navigation.Screen$ProfileSelect {
+}
+class ui.navigation.Screen$Settings {
+}
+class ui.navigation.Screen$MapPreview {
+}
+class ui.navigation.Screen$LocationForecast {
+}
+class ui.navigation.Screen$LocationForecastDetailed {
+}
+class ui.navigation.Screen {
+}
+interface data.database.FavoriteDao {
++ void saveFavorite(Favorite)
++ void deleteFavorite(Favorite)
++ List<Int> getAllFavorites(String)
+}
+
+class data.openAIAPI.repository.OpenAIRepository {
+-  openAIDatasource
++ ChatCompletionsResponse getCompletionsSamples(String)
++ Flow<String> getCompletionsStream(String)
+}
+
+
+class data.metAlertsAPI.models.Feature {
+}
+class ui.screens.profile.activities.ActivityScreenViewModel {
+-  _activityScreenUIState
++ StateFlow<ActivityScreenUIState> activityScreenUIState
++ void loadActivities()
++ void setUser()
++ void updateUserLocationFromMapbox()
++ void updateUserLocation(Point)
++ void getConvertedActivities()
++ void addToActivityLog(Int)
++ void removeFromActivityLog(Int)
++ void addNotesToActivityLog(Int,String)
++ void adjustTimesWalked(Int,Int)
++ void getNotesForHike(Int)
++ void getTotalTimesWalked()
++ void getTimesWalkedForHike(Int)
++ void calculateTotalDistance()
+}
+
+
+class ui.screens.profile.activities.ActivityScreenUIState {
+}
+class data.locationForecastAPI.models.TimeSeries {
+}
+class MainActivity {
++ void onCreate(Bundle?)
+}
+
+class data.locationForecastAPI.models.Geometry {
+}
+class data.metAlertsAPI.models.Geometry$Polygon {
+}
+class data.metAlertsAPI.models.Geometry$MultiPolygon {
+}
+class data.metAlertsAPI.models.Geometry {
++ String type
+}
+
+interface data.database.ActivityDao {
++ void saveLog(Activity)
++ void deleteLog(Activity)
++ List<Int> getAllLogs(String)
++ void adjustTimesWalked(String,Int,Int)
++ void addNotesToLog(String,Int,String)
++ String getNotesForHike(String,Int)
++ Int getTotalTimesWalked(String)
++ Int getTimesWalkedForHike(String,Int)
+}
+
+class data.locationForecastAPI.models.Instant {
+}
+class data.locationForecastAPI.models.Next6Hours {
+}
+class data.locationForecastAPI.models.Units {
+}
+class ui.screens.chatbotScreen.ChatbotMessage {
+}
+class ui.screens.profile.activities.ActivityScreenViewModelFactory {
++ T create(Class<T>)
+}
+
+class data.metAlertsAPI.repository.MetAlertsRepository {
+-  datasource
++ MetAlerts? getAlerts()
+}
+
+
+class data.metAlertsAPI.models.MetAlerts {
+}
+class data.database.Profile {
+}
+class data.metAlertsAPI.models.Resource {
+}
+class ui.screens.favoriteScreen.FavoritesScreenViewModelFactory {
++ T create(Class<T>)
+}
+
+class data.locationForecastAPI.repository.LocationForecastRepository {
+-  datasource
++ Locationforecast? getForecast(Double,Double)
+}
+
+
+class ui.screens.profile.profileSelectScreen.ProfileScreenViewModel {
+- ProfileRepository profileRepository
+-  _profileScreenUIState
++ StateFlow<ProfileScreenUIState> profileScreenUIState
++ void addProfile(String)
++ void deleteProfile(String)
++ void selectProfile(String,() -> Unit)
++ void setProfile()
++ void getAllProfiles()
+}
+
+
+class ui.screens.profile.profileSelectScreen.ProfileScreenUIState {
+}
+enum ui.bottomSheetDrawer.SheetDrawerDetent {
++  HIDDEN
++  SEMIPEEK
++  PEEK
++  FULLYEXPANDED
+}
+
+class data.hikeAPI.repository.HikeAPIRepository {
+-  hikeAPIDatasource
+-  colorIndex
+-  coroutineScope
+-  generatedNames
++ List<Feature> getHikes(Double,Double,Int,String,Int)
+- void generateAndSaveName(Feature,OpenAIViewModel)
+- Color getColor()
+- void generateDifficulty(Feature)
+- DifficultyInfo getDifficultyInfo(String)
++ List<Feature> getHikesById(List<Int>,Point)
+}
+
+
+class data.openAIAPI.models.Choice {
+}
+class data.metAlertsAPI.models.When {
+}
+interface data.database.ProfileDao {
++ void insertUser(Profile)
++ void deleteUser(Profile)
++ List<Profile> getAllUsers()
++ void selectUser(String)
++ Profile? getSelectedUser()
++ Profile? getDefaultUser()
++ void unselectUser()
++ void clearAllUsers()
+}
+
+class data.locationForecastAPI.models.Data {
+}
+class data.metAlertsAPI.models.Properties {
+}
+class data.profile.repository.ProfileRepository$Companion {
+- ProfileRepository? INSTANCE
++ ProfileRepository getInstance(Context,CoroutineScope)
+}
+
+
+class data.profile.repository.ProfileRepository {
++ void addUser(Profile)
++ void deleteProfile(Profile)
++ void selectProfile(String)
++ void unselectUser()
++ Profile getSelectedUser()
++ List<Profile> getAllUsers()
++ void clearAllUsers()
+}
+
+class data.locationForecastAPI.models.Locationforecast {
+}
+class data.hikeAPI.models.Feature {
+}
+class data.database.Activity {
+}
+
+
+androidx.lifecycle.ViewModel <|-- ui.screens.hikeCardScreen.HikeScreenViewModel
+androidx.lifecycle.AndroidViewModel <|-- ui.screens.favoriteScreen.FavoritesScreenViewModel
+data.database.Companion +.. data.database.Companion$DatabaseCallBack
+data.database.ProfileDatabase$Companion +.. data.database.ProfileDatabase$Companion$DatabaseCallBack
+data.database.Callback <|-- data.database.ProfileDatabase$Companion$DatabaseCallBack
+data.database.ProfileDatabase +.. data.database.ProfileDatabase$Companion
+androidx.room.RoomDatabase <|-- data.database.ProfileDatabase
+ui.mapbox.OnIndicatorPositionChangedListener <|.. ui.mapbox.null
+data.database.Migration <|-- data.database.null
+data.database.Migration <|-- data.database.null
+androidx.lifecycle.ViewModel <|-- ui.screens.chatbotScreen.OpenAIViewModel
+data.date.Weekdays +.. data.date.Weekdays$Companion
+androidx.lifecycle.ViewModel <|-- ui.mapbox.MapboxViewModel
+androidx.lifecycle.ViewModel <|-- ui.screens.homeScreen.HomeScreenViewModel
+ui.navigation.Screen +.. ui.navigation.Screen$Welcome
+ui.navigation.Screen <|-- ui.navigation.Screen$Welcome
+ui.navigation.Screen +.. ui.navigation.Screen$Home
+ui.navigation.Screen <|-- ui.navigation.Screen$Home
+ui.navigation.Screen +.. ui.navigation.Screen$Favorites
+ui.navigation.Screen <|-- ui.navigation.Screen$Favorites
+ui.navigation.Screen +.. ui.navigation.Screen$HikeScreen
+ui.navigation.Screen <|-- ui.navigation.Screen$HikeScreen
+ui.navigation.Screen +.. ui.navigation.Screen$Chatbot
+ui.navigation.Screen <|-- ui.navigation.Screen$Chatbot
+ui.navigation.Screen +.. ui.navigation.Screen$Profile
+ui.navigation.Screen <|-- ui.navigation.Screen$Profile
+ui.navigation.Screen +.. ui.navigation.Screen$ProfileSelect
+ui.navigation.Screen <|-- ui.navigation.Screen$ProfileSelect
+ui.navigation.Screen +.. ui.navigation.Screen$Settings
+ui.navigation.Screen <|-- ui.navigation.Screen$Settings
+ui.navigation.Screen +.. ui.navigation.Screen$MapPreview
+ui.navigation.Screen <|-- ui.navigation.Screen$MapPreview
+ui.navigation.Screen +.. ui.navigation.Screen$LocationForecast
+ui.navigation.Screen <|-- ui.navigation.Screen$LocationForecast
+ui.navigation.Screen +.. ui.navigation.Screen$LocationForecastDetailed
+ui.navigation.Screen <|-- ui.navigation.Screen$LocationForecastDetailed
+androidx.lifecycle.AndroidViewModel <|-- ui.screens.profile.activities.ActivityScreenViewModel
+androidx.activity.ComponentActivity <|-- MainActivity
+data.metAlertsAPI.models.Geometry +.. data.metAlertsAPI.models.Geometry$Polygon
+data.metAlertsAPI.models.Geometry <|-- data.metAlertsAPI.models.Geometry$Polygon
+data.metAlertsAPI.models.Geometry +.. data.metAlertsAPI.models.Geometry$MultiPolygon
+data.metAlertsAPI.models.Geometry <|-- data.metAlertsAPI.models.Geometry$MultiPolygon
+ui.screens.profile.activities.Factory <|.. ui.screens.profile.activities.ActivityScreenViewModelFactory
+ui.screens.favoriteScreen.Factory <|.. ui.screens.favoriteScreen.FavoritesScreenViewModelFactory
+androidx.lifecycle.AndroidViewModel <|-- ui.screens.profile.profileSelectScreen.ProfileScreenViewModel
+data.profile.repository.ProfileRepository +.. data.profile.repository.ProfileRepository$Companion
+@enduml
