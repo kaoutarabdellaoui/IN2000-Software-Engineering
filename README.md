@@ -31,6 +31,10 @@ Dette prosjektet er en del av IN2000 - Software Engineering med Prosjektarbeid v
 - **MET Alerts API:** Brukes til å hente værvarsler og advarsler.
 - **TurDB API:** Brukes til å hente informasjon om turstier basert på geografiske koordinater.
 
+⚠️ Dette prosjektet er lastet opp uten API-nøkler av hensyn til sikkerhet.  
+For å se appen i bruk med nøklene, se eget dokument som følger med prosjektet.
+
+
 ## 📱 Funksjonaliteter
 - **Kartvisning:** Viser turstier på et interaktivt kart.
 - **Ruteinformasjon:** Gir detaljer om avstand, vanskelighetsgrad og beskrivelse av turstier.
